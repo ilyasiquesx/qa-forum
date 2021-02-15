@@ -40,7 +40,7 @@ namespace QAForum.Infrastructure.Repositories
 
         public async Task<bool> DoesAnswerExistAsync(long id)
         {
-            return (await _appDbContext.Answers.FirstOrDefaultAsync(a => a.Id == id)) != null;
+            return (await _appDbContext.Answers.FirstOrDefaultAsync(a => a.Id == id)) is not null;
         }
     }
 }
