@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+
+  qa-forum-server:
+    container_name: qa-forum-server
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: WebApi/Dockerfile
+    ports:
+      - 127.0.0.1:5100:80
+    environment:
+      - ConnectionString=Host=db;Port=5432;Database=local-qa-forum;Username=postgres;Password=mysecretpassword
+      - TZ=Europe/Moscow
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - qa-network-local
+    depends_on:
+      - db
+
+  db:
+    container_name: qa-forum-db
+    image: postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    networks:
+      - qa-network-local
+
+networks:
+  qa-network-local:
+    driver: bridge
