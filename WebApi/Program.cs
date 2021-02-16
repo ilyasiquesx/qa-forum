@@ -35,8 +35,7 @@ namespace WebApi
                     throw;
                 }
             }
-
-
+            
             await host.RunAsync();
         }
 
